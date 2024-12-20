@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\erenc\\Source\\Repos\\WebProject\\WebProje\\WebProje\\WebProje.csproj",
+      "projectUniqueName": "C:\\Users\\erenc\\Source\\Repos\\WebProject\\WebProje\\WebProje.csproj",
       "projectName": "WebProje",
-      "projectPath": "C:\\Users\\erenc\\Source\\Repos\\WebProject\\WebProje\\WebProje\\WebProje.csproj",
+      "projectPath": "C:\\Users\\erenc\\Source\\Repos\\WebProject\\WebProje\\WebProje.csproj",
       "packagesPath": "C:\\Users\\erenc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\erenc\\Source\\Repos\\WebProject\\WebProje\\WebProje\\obj\\",
+      "outputPath": "C:\\Users\\erenc\\Source\\Repos\\WebProject\\WebProje\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
