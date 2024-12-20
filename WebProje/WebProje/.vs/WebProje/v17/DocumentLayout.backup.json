@@ -1,0 +1,96 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\erenc\\source\\repos\\WebProject\\WebProje\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E0A6CD6E-AEB0-4087-A445-D212B7C9C0F5}|WebProje\\WebProje.csproj|c:\\users\\erenc\\source\\repos\\webproject\\webproje\\webproje\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E0A6CD6E-AEB0-4087-A445-D212B7C9C0F5}|WebProje\\WebProje.csproj|solutionrelative:webproje\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0A6CD6E-AEB0-4087-A445-D212B7C9C0F5}|WebProje\\WebProje.csproj|c:\\users\\erenc\\source\\repos\\webproject\\webproje\\webproje\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E0A6CD6E-AEB0-4087-A445-D212B7C9C0F5}|WebProje\\WebProje.csproj|solutionrelative:webproje\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0A6CD6E-AEB0-4087-A445-D212B7C9C0F5}|WebProje\\WebProje.csproj|c:\\users\\erenc\\source\\repos\\webproject\\webproje\\webproje\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E0A6CD6E-AEB0-4087-A445-D212B7C9C0F5}|WebProje\\WebProje.csproj|solutionrelative:webproje\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0A6CD6E-AEB0-4087-A445-D212B7C9C0F5}|WebProje\\WebProje.csproj|c:\\users\\erenc\\source\\repos\\webproject\\webproje\\webproje\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E0A6CD6E-AEB0-4087-A445-D212B7C9C0F5}|WebProje\\WebProje.csproj|solutionrelative:webproje\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Privacy.cshtml",
+              "DocumentMoniker": "C:\\Users\\erenc\\source\\repos\\WebProject\\WebProje\\WebProje\\Views\\Home\\Privacy.cshtml",
+              "RelativeDocumentMoniker": "WebProje\\Views\\Home\\Privacy.cshtml",
+              "ToolTip": "C:\\Users\\erenc\\source\\repos\\WebProject\\WebProje\\WebProje\\Views\\Home\\Privacy.cshtml",
+              "RelativeToolTip": "WebProje\\Views\\Home\\Privacy.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-18T19:15:47.638Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "_ViewImports.cshtml",
+              "DocumentMoniker": "C:\\Users\\erenc\\source\\repos\\WebProject\\WebProje\\WebProje\\Views\\_ViewImports.cshtml",
+              "RelativeDocumentMoniker": "WebProje\\Views\\_ViewImports.cshtml",
+              "ToolTip": "C:\\Users\\erenc\\source\\repos\\WebProject\\WebProje\\WebProje\\Views\\_ViewImports.cshtml",
+              "RelativeToolTip": "WebProje\\Views\\_ViewImports.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-18T18:52:14.604Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "_ViewStart.cshtml",
+              "DocumentMoniker": "C:\\Users\\erenc\\source\\repos\\WebProject\\WebProje\\WebProje\\Views\\_ViewStart.cshtml",
+              "RelativeDocumentMoniker": "WebProje\\Views\\_ViewStart.cshtml",
+              "ToolTip": "C:\\Users\\erenc\\source\\repos\\WebProject\\WebProje\\WebProje\\Views\\_ViewStart.cshtml",
+              "RelativeToolTip": "WebProje\\Views\\_ViewStart.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-18T18:52:13.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\erenc\\source\\repos\\WebProject\\WebProje\\WebProje\\appsettings.json",
+              "RelativeDocumentMoniker": "WebProje\\appsettings.json",
+              "ToolTip": "C:\\Users\\erenc\\source\\repos\\WebProject\\WebProje\\WebProje\\appsettings.json",
+              "RelativeToolTip": "WebProje\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-12-18T18:51:35.278Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
