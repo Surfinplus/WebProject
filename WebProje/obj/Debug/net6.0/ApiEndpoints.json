@@ -1,0 +1,96 @@
+[
+  {
+    "ContainingType": "ApiController",
+    "Method": "GetAppointmentsByEmployee",
+    "RelativePath": "api/Api/GetAppointmentsByEmployee",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "employeeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AppointmentController",
+    "Method": "GetAllAppointments",
+    "RelativePath": "api/Appointment",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AppointmentController",
+    "Method": "AddAppointment",
+    "RelativePath": "api/Appointment",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "appointment",
+        "Type": "Appointment",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EmployeeController",
+    "Method": "GetAllEmployees",
+    "RelativePath": "api/Employee",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EmployeeController",
+    "Method": "AddEmployee",
+    "RelativePath": "api/Employee",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "employee",
+        "Type": "Employee",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SalonController",
+    "Method": "GetAllSalons",
+    "RelativePath": "api/Salon",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SalonController",
+    "Method": "AddSalon",
+    "RelativePath": "api/Salon",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "salon",
+        "Type": "Salon",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

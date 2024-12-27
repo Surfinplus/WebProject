@@ -1,21 +1,48 @@
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WebProje.Models;
+using System.Diagnostics;
+using WebApplication1.Models;
 
-namespace WebProje.Controllers
+namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, 
+                            UserManager<User> userManager, 
+                            SignInManager<User> signInManager)
         {
             _logger = logger;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                return RedirectToAction("Index");
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(email, password, false, false);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("UserDashboard", "User");
+            }
+
+            // Başarısız giriş
+            TempData["ErrorMessage"] = "Geçersiz email veya şifre!";
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()
