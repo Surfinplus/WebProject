@@ -1,0 +1,227 @@
+@{
+    ViewData["Title"] = "Admin Paneli";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Admin Paneli</h2>
+    <div class="row">
+        <!-- Sol taraf - Çalışan Ekleme -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Çalışan Ekle</h5>
+                </div>
+                <div class="card-body">
+                    <form id="employeeForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Ad Soyad</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="expertise" class="form-label">Uzmanlık Alanı</label>
+                            <input type="text" class="form-control" id="expertise" name="expertise" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Çalışan Ekle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sağ taraf - Çalışan Listesi -->
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Çalışan Listesi</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Ad Soyad</th>
+                                    <th>Uzmanlık Alanı</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employeesList">
+                                <!-- Çalışanlar buraya JavaScript ile yüklenecek -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tüm Randevular -->
+            <div class="card">
+                <div class="card-header">
+                    <h5>Tüm Randevular</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tarih</th>
+                                    <th>Saat</th>
+                                    <th>Müşteri</th>
+                                    <th>Çalışan</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointmentsList">
+                                <!-- Randevular buraya JavaScript ile yüklenecek -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Sayfa yüklendiğinde çalışanlar ve randevuları getir
+        document.addEventListener('DOMContentLoaded', function () {
+            loadEmployees();
+            loadAppointments();
+        });
+
+        // Çalışanları getir
+        async function loadEmployees() {
+            try {
+                const response = await fetch('/api/Employee');
+                const employees = await response.json();
+
+                const tbody = document.getElementById('employeesList');
+                tbody.innerHTML = '';
+
+                employees.forEach(emp => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                                <td>${emp.name}</td>
+                                <td>${emp.expertise || 'Belirtilmemiş'}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteEmployee(${emp.id})">
+                                        <i class="fas fa-trash"></i> Sil
+                                    </button>
+                                </td>
+                            `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error('Çalışanlar yüklenemedi:', error);
+            }
+        }
+
+        // Çalışan silme
+        async function deleteEmployee(id) {
+            if (!confirm('Bu çalışanı silmek istediğinizden emin misiniz?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/Employee/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    alert('Çalışan başarıyla silindi!');
+                    loadEmployees(); // Listeyi yenile
+                } else {
+                    alert('Çalışan silinirken bir hata oluştu!');
+                }
+            } catch (error) {
+                console.error('Hata:', error);
+                alert('Bir hata oluştu!');
+            }
+        }
+
+        // Randevuları getir
+        async function loadAppointments() {
+            try {
+                const response = await fetch('/api/Appointment/all');
+                const appointments = await response.json();
+
+                const tbody = document.getElementById('appointmentsList');
+                tbody.innerHTML = '';
+
+                appointments.forEach(app => {
+                    const date = new Date(app.appointmentTime);
+                    const formattedDate = date.toLocaleDateString('tr-TR');
+                    const formattedTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                                <td>${formattedDate}</td>
+                                <td>${formattedTime}</td>
+                                <td>${app.customerName || 'Belirtilmemiş'}</td>
+                                <td>${app.employeeName || 'Belirtilmemiş'}</td> <!-- Çalışan bilgisi doğru şekilde gösteriliyor -->
+                                <td>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteAppointment(${app.id})">
+                                        <i class="fas fa-trash"></i> Sil
+                                    </button>
+                                </td>
+                            `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error('Randevular yüklenemedi:', error);
+            }
+        }
+
+        // Randevu silme
+        async function deleteAppointment(id) {
+            if (!confirm('Bu randevuyu silmek istediğinizden emin misiniz?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/Appointment/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    alert('Randevu başarıyla silindi!');
+                    loadAppointments(); // Listeyi yenile
+                } else {
+                    alert('Randevu silinirken bir hata oluştu!');
+                }
+            } catch (error) {
+                console.error('Hata:', error);
+                alert('Bir hata oluştu!');
+            }
+        }
+
+        // Çalışan ekleme formu
+        document.getElementById('employeeForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const employeeData = {
+                name: document.getElementById('name').value,
+                expertise: document.getElementById('expertise').value
+            };
+
+            try {
+                const response = await fetch('/api/Employee', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(employeeData)
+                });
+
+                if (response.ok) {
+                    alert('Çalışan başarıyla eklendi!');
+                    this.reset();
+                    loadEmployees(); // Listeyi yenile
+                } else {
+                    alert('Çalışan eklenirken bir hata oluştu!');
+                }
+            } catch (error) {
+                console.error('Hata:', error);
+                alert('Bir hata oluştu!');
+            }
+        });
+    </script>
+}

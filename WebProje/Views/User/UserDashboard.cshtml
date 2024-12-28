@@ -1,0 +1,187 @@
+@{
+    ViewData["Title"] = "Kullanıcı Paneli";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Sol taraf - Randevu Formu -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Randevu Al</h5>
+                </div>
+                <div class="card-body">
+                    <form id="appointmentForm">
+                        <div class="mb-3">
+                            <label for="appointmentDate" class="form-label">Tarih</label>
+                            <input type="date" class="form-control" id="appointmentDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="appointmentTime" class="form-label">Saat</label>
+                            <select class="form-control" id="appointmentTime" required>
+                                <option value="">Seçiniz</option>
+                                <option value="08:00">08:00</option>
+                                <option value="08:30">08:30</option>
+                                <option value="09:00">09:00</option>
+                                <option value="09:30">09:30</option>
+                                <option value="10:00">10:00</option>
+                                <option value="10:30">10:30</option>
+                                <option value="11:00">11:00</option>
+                                <option value="11:30">11:30</option>
+                                <option value="12:00">12:00</option>
+                                <option value="12:30">12:30</option>
+                                <option value="13:00">13:00</option>
+                                <option value="13:30">13:30</option>
+                                <option value="14:00">14:00</option>
+                                <option value="14:30">14:30</option>
+                                <option value="15:00">15:00</option>
+                                <option value="15:30">15:30</option>
+                                <option value="16:00">16:00</option>
+                                <option value="16:30">16:30</option>
+                                <option value="17:00">17:00</option>
+                                <option value="17:30">17:30</option>
+                                <option value="18:00">18:00</option>
+                                <option value="18:30">18:30</option>
+                                <option value="19:00">19:00</option>
+                                <option value="19:30">19:30</option>
+                                <option value="20:00">20:00</option>
+                                <option value="20:30">20:30</option>
+                                <option value="21:00">21:00</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Çalışan</label>
+                            <select class="form-control" id="employeeId" required>
+                                <option value="">Seçiniz</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Randevu Al</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sağ taraf - Randevu Listesi -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Randevularım</h5>
+                </div>
+                <div class="card-body">
+                    <div id="appointmentsList">
+                        <!-- Randevular buraya JavaScript ile yüklenecek -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Sayfa yüklendiğinde çalışanları ve randevuları getir
+        document.addEventListener('DOMContentLoaded', async function () {
+            await loadEmployees();
+            await loadAppointments();
+        });
+
+        // Çalışanları getir
+        async function loadEmployees() {
+            try {
+                const response = await fetch('/api/Employee');
+                const employees = await response.json();
+
+                const select = document.getElementById('employeeId');
+                employees.forEach(emp => {
+                    const option = document.createElement('option');
+                    option.value = emp.id;
+                    option.textContent = emp.name;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Çalışanlar yüklenemedi:', error);
+            }
+        }
+
+        // Randevuları getir
+        async function loadAppointments() {
+            try {
+                const response = await fetch('/api/Appointment/user/@User.Identity?.Name');
+                const appointments = await response.json();
+
+                const appointmentsList = document.getElementById('appointmentsList');
+                appointmentsList.innerHTML = '';
+
+                if (appointments.length === 0) {
+                    appointmentsList.innerHTML = '<p class="text-muted">Henüz randevunuz bulunmamaktadır.</p>';
+                    return;
+                }
+
+                appointments.forEach(app => {
+                    // UTC'yi yerel saate çevir
+                    const date = new Date(app.appointmentTime);
+                    const formattedDate = date.toLocaleDateString('tr-TR');
+                    const formattedTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+
+                    const appointmentDiv = document.createElement('div');
+                    appointmentDiv.className = 'card mb-2';
+                    appointmentDiv.innerHTML = `
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        ${formattedDate} - ${formattedTime}
+                                    </h6>
+                                    <p class="card-text">
+                                        Çalışan: ${app.employeeName || 'Belirtilmemiş'}<br>
+                                        Hizmet: ${app.service || 'Saç Kesimi'}
+                                    </p>
+                                </div>
+                            `;
+                    appointmentsList.appendChild(appointmentDiv);
+                });
+            } catch (error) {
+                console.error('Randevular yüklenemedi:', error);
+                document.getElementById('appointmentsList').innerHTML =
+                    '<div class="alert alert-danger">Randevular yüklenirken bir hata oluştu.</div>';
+            }
+        }
+
+        // Form gönderildiğinde
+        document.getElementById('appointmentForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const appointmentData = {
+                appointmentTime: new Date(
+                    document.getElementById('appointmentDate').value + 'T' +
+                    document.getElementById('appointmentTime').value
+                ).toISOString(),
+                employeeId: parseInt(document.getElementById('employeeId').value),
+                userId: '@User.Identity?.Name',
+                serviceId: 1 // Şimdilik sabit bir değer
+            };
+
+            try {
+                const response = await fetch('/api/Appointment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(appointmentData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Randevu başarıyla oluşturuldu!');
+                    this.reset();
+                    await loadAppointments();
+                } else {
+                    const errorMessage = result.error || result.message || 'Randevu oluşturulamadı';
+                    alert('Hata: ' + errorMessage);
+                }
+            } catch (error) {
+                console.error('Hata:', error);
+                alert('Bir hata oluştu!');
+            }
+        });
+    </script>
+}

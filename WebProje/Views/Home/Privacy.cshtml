@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+<div class="container mt-5">
+    <h2 class="text-center">Kayıt Ol</h2>
+    <form method="post" asp-action="Register">
+        <div class="mb-3">
+            <label for="Email" class="form-label">E-posta</label>
+            <input type="email" class="form-control" id="Email" name="Email" placeholder="E-posta adresinizi girin" required>
+        </div>
+        <div class="mb-3">
+            <label for="Password" class="form-label">Şifre</label>
+            <input type="password" class="form-control" id="Password" name="Password" placeholder="Şifrenizi girin" required>
+        </div>
+        <div class="mb-3">
+            <label for="Role" class="form-label">Rol</label>
+            <select class="form-select" id="Role" name="Role" required>
+                <option value="User">Kullanıcı</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Kayıt Ol</button>
+    </form>
+</div>

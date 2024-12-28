@@ -2213,11 +2213,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\semih\\Source\\Repos\\WebProject\\WebProje\\WebProje.csproj",
-      "projectName": "WebProje",
-      "projectPath": "C:\\Users\\semih\\Source\\Repos\\WebProject\\WebProje\\WebProje.csproj",
+      "projectUniqueName": "C:\\Users\\semih\\source\\repos\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+      "projectName": "WebApplication1",
+      "projectPath": "C:\\Users\\semih\\source\\repos\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
       "packagesPath": "C:\\Users\\semih\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\semih\\Source\\Repos\\WebProject\\WebProje\\obj\\",
+      "outputPath": "C:\\Users\\semih\\source\\repos\\WebApplication1\\WebApplication1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\semih\\AppData\\Roaming\\NuGet\\NuGet.Config",

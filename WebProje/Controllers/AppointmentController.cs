@@ -13,7 +13,7 @@ public class AppointmentController : ControllerBase
     private readonly ILogger<AppointmentController> _logger;
     private readonly ApplicationDbContext _context;
 
-    public AppointmentController(IAppointmentService appointmentService, 
+    public AppointmentController(IAppointmentService appointmentService,
                                ILogger<AppointmentController> logger,
                                ApplicationDbContext context)
     {
@@ -40,14 +40,17 @@ public class AppointmentController : ControllerBase
             if (appointment.AppointmentTime < DateTime.Now)
                 return BadRequest("Geçmiş bir tarihe randevu oluşturulamaz");
 
+            // UTC'ye çevirerek kaydet
+            appointment.AppointmentTime = appointment.AppointmentTime.ToUniversalTime();
+
             // Randevu çakışması kontrolü
             var appointmentDate = appointment.AppointmentTime.Date;
             var appointmentTime = appointment.AppointmentTime.TimeOfDay;
 
             // Seçilen çalışanın o saatteki randevularını kontrol et
             var existingAppointment = await _context.Appointments
-                .FirstOrDefaultAsync(a => 
-                    a.EmployeeId == appointment.EmployeeId && 
+                .FirstOrDefaultAsync(a =>
+                    a.EmployeeId == appointment.EmployeeId &&
                     a.AppointmentTime.Date == appointmentDate &&
                     a.AppointmentTime.TimeOfDay == appointmentTime);
 
@@ -81,24 +84,47 @@ public class AppointmentController : ControllerBase
     {
         try
         {
-            var appointments = await _appointmentService.GetAppointmentsByUserIdAsync(userId);
-            return Ok(appointments);
+            var appointments = await _context.Appointments
+                .Include(a => a.Employee) // Çalışan bilgisini dahil et
+                .Where(a => a.CustomerName == userId) // Kullanıcıya ait randevular
+                .ToListAsync();
+
+            var result = appointments.Select(a => new
+            {
+                a.Id,
+                AppointmentTime = a.AppointmentTime.ToLocalTime(), // Yerel saat
+                a.CustomerName,
+                EmployeeName = a.Employee != null ? a.Employee.Name : "Belirtilmedi", // Çalışan adı
+                Service = "Saç Kesimi" // Hizmet adı (örnek)
+            });
+
+            return Ok(result);
         }
         catch (Exception ex)
         {
-            _logger.LogError($"Randevuları getirme hatası: {ex.Message}");
+            _logger.LogError($"Randevular getirilirken hata oluştu: {ex.Message}");
             return BadRequest($"Randevular getirilirken hata oluştu: {ex.Message}");
         }
     }
 
-    // Tüm randevuları getir (Admin için)
     [HttpGet("all")]
     public async Task<IActionResult> GetAllAppointments()
     {
         try
         {
-            var appointments = await _appointmentService.GetAllAppointmentsAsync();
-            return Ok(appointments);
+            var appointments = await _context.Appointments
+                .Include(a => a.Employee) // Çalışan bilgisini dahil et
+                .ToListAsync();
+
+            var result = appointments.Select(a => new
+            {
+                a.Id,
+                AppointmentTime = a.AppointmentTime.ToLocalTime(),
+                a.CustomerName,
+                EmployeeName = a.Employee != null ? a.Employee.Name : "Belirtilmedi" // Çalışan adı
+            });
+
+            return Ok(result);
         }
         catch (Exception ex)
         {
@@ -107,13 +133,18 @@ public class AppointmentController : ControllerBase
         }
     }
 
-    // Randevu silme (Admin için)
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAppointment(int id)
     {
         try
         {
-            await _appointmentService.DeleteAppointmentAsync(id);
+            var appointment = await _context.Appointments.FindAsync(id);
+            if (appointment == null)
+                return NotFound($"ID {id} ile randevu bulunamadı.");
+
+            _context.Appointments.Remove(appointment);
+            await _context.SaveChangesAsync();
+
             return Ok(new { message = "Randevu başarıyla silindi" });
         }
         catch (Exception ex)
